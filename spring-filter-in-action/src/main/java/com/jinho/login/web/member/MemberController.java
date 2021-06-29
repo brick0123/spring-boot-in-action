@@ -1,7 +1,6 @@
-package com.jinho.login.web;
+package com.jinho.login.web.member;
 
-import com.jinho.login.domain.MemberRepository;
-import com.jinho.login.domain.MemberRequest;
+import com.jinho.login.domain.member.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;

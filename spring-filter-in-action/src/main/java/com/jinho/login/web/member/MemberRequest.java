@@ -1,8 +1,11 @@
-package com.jinho.login.domain;
+package com.jinho.login.web.member;
 
+import com.jinho.login.domain.member.Member;
 import lombok.Getter;
+import lombok.Setter;
 
 @Getter
+@Setter
 public class MemberRequest {
 
     private String name;

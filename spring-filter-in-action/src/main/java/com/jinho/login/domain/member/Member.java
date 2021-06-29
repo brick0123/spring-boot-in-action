@@ -1,4 +1,4 @@
-package com.jinho.login.domain;
+package com.jinho.login.domain.member;
 
 import lombok.EqualsAndHashCode;
 import lombok.Getter;

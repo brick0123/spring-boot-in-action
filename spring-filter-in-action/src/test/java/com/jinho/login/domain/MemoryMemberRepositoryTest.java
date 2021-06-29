@@ -2,6 +2,9 @@ package com.jinho.login.domain;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import com.jinho.login.domain.member.Member;
+import com.jinho.login.domain.member.MemberRepository;
+import com.jinho.login.domain.member.MemoryMemberRepository;
 import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

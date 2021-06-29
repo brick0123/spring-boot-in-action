@@ -1,4 +1,4 @@
-package com.jinho.login.domain;
+package com.jinho.login.domain.member;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,6 +24,13 @@ public class MemoryMemberRepository implements MemberRepository {
     @Override
     public Optional<Member> findById(Long id) {
         return Optional.of(store.get(id));
+    }
+
+    @Override
+    public Optional<Member> findByName(String name) {
+        return findAll().stream()
+            .filter(m -> m.getName().equals(name))
+            .findAny();
     }
 
     @Override
