@@ -51,3 +51,7 @@ subprojects {
 project('spring-filter-in-action') {
 
 }
+
+project('spring-jpa-in-action') {
+
+}
