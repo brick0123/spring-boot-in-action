@@ -4,7 +4,8 @@ spring:
     username: test
     password: 1234
     driver-class-name: com.mysql.cj.jdbc.Driver
+
   jpa:
     hibernate:
-      ddl-auto: create-drop
+      ddl-auto: create
     show-sql: true
