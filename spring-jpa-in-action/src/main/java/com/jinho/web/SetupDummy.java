@@ -10,7 +10,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
-@Component
+//@Component
 @RequiredArgsConstructor
 public class SetupDummy {
 
@@ -32,7 +32,7 @@ public class SetupDummy {
             User user = new User();
             em.persist(user);
 
-            for (int i = 0; i < 500; i++) {
+            for (int i = 0; i < 10_000; i++) {
                 Board board = new Board(Category.FREE_TALK, "Spring Data Performance Test", "Content");
                 BoardBookMark bookMark = new BoardBookMark(user.getId(), board.getId());
 

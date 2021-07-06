@@ -1,7 +1,6 @@
 package com.jinho.domain;
 
 import static com.jinho.domain.QBoard.board;
-import static com.jinho.domain.QBoardBookMark.boardBookMark;
 
 import com.querydsl.core.types.Projections;
 import com.querydsl.jpa.impl.JPAQueryFactory;
@@ -10,10 +9,13 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Slice;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 @Repository
 @RequiredArgsConstructor
+@Transactional(readOnly = true)
 public class GetBoardListRepository {
 
     private final JPAQueryFactory queryFactory;
@@ -25,13 +27,9 @@ public class GetBoardListRepository {
                 board.title,
                 board.content,
                 board.createdAt,
-                board.updatedAt,
-                boardBookMark.id.as("bookMarkId")))
+                board.updatedAt))
             .from(board)
-            .leftJoin(boardBookMark)
-            .on(
-                boardBookMark.userId.eq(userId),
-                boardBookMark.boardId.eq(board.id))
+            .orderBy(board.id.desc())
             .offset(pageable.getOffset())
             .limit(pageable.getPageSize())
             .fetch();
@@ -45,4 +43,18 @@ public class GetBoardListRepository {
             .fetchCount();
     }
 
+    public Slice<BoardResponse> getV2(Long userId, Pageable pageable) {
+        List<BoardResponse> content = queryFactory
+            .select(Projections.fields(BoardResponse.class,
+                board.id.as("boardId"),
+                board.title,
+                board.content,
+                board.createdAt,
+                board.updatedAt))
+            .from(board)
+            .offset(pageable.getOffset())
+            .limit(pageable.getPageSize())
+            .fetch();
+        return RepositoryHelper.toSlice(content, pageable);
+    }
 }
