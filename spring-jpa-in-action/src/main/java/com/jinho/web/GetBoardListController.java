@@ -16,7 +16,7 @@ public class GetBoardListController {
 
     private final GetBoardListRepository getBoardListRepository;
 
-    @GetMapping("/api/v1/boards/v1")
+    @GetMapping("/api/v1/boards")
     public Page<BoardResponse> getV1(
         @RequestParam Integer page,
         @RequestParam Integer size
@@ -24,7 +24,7 @@ public class GetBoardListController {
         return getBoardListRepository.getV1(1L, PageRequest.of(page, size));
     }
 
-    @GetMapping("/api/v2/boards/")
+    @GetMapping("/api/v2/boards")
     public Slice<BoardResponse> getV2(
         @RequestParam Integer page,
         @RequestParam Integer size
