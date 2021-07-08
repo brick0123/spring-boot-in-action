@@ -55,3 +55,7 @@ project('spring-filter-in-action') {
 project('spring-jpa-in-action') {
 
 }
+
+project('spring-core-in-action') {
+
+}
