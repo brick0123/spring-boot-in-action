@@ -17,4 +17,12 @@ public class BoardResponse {
     private LocalDateTime updatedAt;
 
     private Long bookMarkId;
+
+    public BoardResponse(Board entity) {
+        this.boardId = entity.getId();
+        this.title = entity.getTitle();
+        this.content = entity.getContent();
+        this.createdAt = entity.getCreatedAt();
+        this.updatedAt = entity.getUpdatedAt();
+    }
 }

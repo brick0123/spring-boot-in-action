@@ -1,7 +1,7 @@
 package com.jinho.web;
 
 import com.jinho.domain.Board;
-import com.jinho.domain.BoardBookMark;
+import com.jinho.domain.BoardBookmark;
 import com.jinho.domain.Category;
 import com.jinho.domain.User;
 import javax.annotation.PostConstruct;
@@ -34,7 +34,7 @@ public class SetupDummy {
 
             for (int i = 0; i < 10_000; i++) {
                 Board board = new Board(Category.FREE_TALK, "Spring Data Performance Test", "Content");
-                BoardBookMark bookMark = new BoardBookMark(user.getId(), board.getId());
+                BoardBookmark bookMark = new BoardBookmark(user.getId(), board.getId());
 
                 em.persist(board);
                 em.persist(bookMark);

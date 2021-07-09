@@ -8,9 +8,9 @@ import lombok.Getter;
 
 @Getter
 @Entity
-public class BoardBookMark {
+public class BoardBookmark {
 
-    protected BoardBookMark() {
+    protected BoardBookmark() {
     }
 
     @Id
@@ -21,7 +21,7 @@ public class BoardBookMark {
 
     private Long boardId;
 
-    public BoardBookMark(Long userId, Long boardId) {
+    public BoardBookmark(Long userId, Long boardId) {
         this.userId = userId;
         this.boardId = boardId;
     }

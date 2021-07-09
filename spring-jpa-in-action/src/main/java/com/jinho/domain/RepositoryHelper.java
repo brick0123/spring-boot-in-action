@@ -10,12 +10,6 @@ import org.springframework.data.domain.SliceImpl;
 public class RepositoryHelper {
 
     public static <T> Slice<T> toSlice(List<T> content, Pageable pageable) {
-        boolean hasNext = false;
-
-        if (content.size() > pageable.getPageSize()) {
-            content.remove(pageable.getPageSize());
-            hasNext = true;
-        }
-        return new SliceImpl<>(content, pageable, hasNext);
+        return new SliceImpl<>(content, pageable, true);
     }
 }
