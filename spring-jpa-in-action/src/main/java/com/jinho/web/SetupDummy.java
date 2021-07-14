@@ -29,7 +29,7 @@ public class SetupDummy {
         private final EntityManager em;
 
         public void setup() {
-            User user = new User();
+            User user = new User("a");
             em.persist(user);
 
             for (int i = 0; i < 10_000; i++) {
