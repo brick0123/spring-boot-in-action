@@ -27,6 +27,10 @@ subprojects {
         mavenCentral()
     }
 
+    jar {
+        enabled = false
+    }
+
     task initSourceFolders {
         sourceSets*.java.srcDirs*.each {
             if (!it.exists()) {
