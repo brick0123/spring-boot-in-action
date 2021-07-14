@@ -22,24 +22,24 @@ public class GetBoardListController {
 
     @GetMapping("/api/v1/boards")
     public Page<BoardResponse> getV1(
-        @RequestParam Integer page,
-        @RequestParam Integer size
+        @RequestParam final Integer page,
+        @RequestParam final Integer size
     ) {
-        return getBoardListRepository.getV1(1L, PageRequest.of(page, size));
+        return getBoardListRepository.getV1(PageRequest.of(page, size));
     }
 
     @GetMapping("/api/v2/boards")
     public Slice<BoardResponse> getV2(
-        @RequestParam Integer page,
-        @RequestParam Integer size
+        @RequestParam final Integer page,
+        @RequestParam final Integer size
     ) {
-        return getBoardListRepository.getV2(1L, PageRequest.of(page, size));
+        return getBoardListRepository.getV2(PageRequest.of(page, size));
     }
-    
+
     @GetMapping("/api/v3/boards")
     public Slice<BoardResponse> getV3(
-        @RequestParam Integer page,
-        @RequestParam Integer size
+        @RequestParam final Integer page,
+        @RequestParam final Integer size
     ) {
         return boardRepository.find(PageRequest.of(page, size)).map(BoardResponse::new);
     }
