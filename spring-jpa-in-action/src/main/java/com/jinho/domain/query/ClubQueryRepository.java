@@ -26,4 +26,10 @@ public class ClubQueryRepository {
                 .fetchJoin()
             .fetch();
     }
+
+    public List<Club> fetchV2() {
+        return queryFactory
+            .selectFrom(club)
+            .fetch();
+    }
 }

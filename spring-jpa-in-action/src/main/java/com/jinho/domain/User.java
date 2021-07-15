@@ -23,6 +23,10 @@ public class User {
     private String name;
 
     @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "quest_id")
+    private Quest quest;
+
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "club_id")
     private Club club;
 
@@ -32,5 +36,9 @@ public class User {
 
     public void setClub(final Club club) {
         this.club = club;
+    }
+
+    public void registerQuest(final Quest quest) {
+        this.quest = quest;
     }
 }
