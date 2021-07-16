@@ -8,10 +8,12 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class UserQueryResponse {
 
+    private Long userId;
     private String name;
     private String content;
 
     public UserQueryResponse(final User user) {
+        userId = user.getId();
         name = user.getName();
         content = user.getQuest().getContent();
     }

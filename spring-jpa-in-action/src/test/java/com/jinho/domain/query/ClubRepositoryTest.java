@@ -78,6 +78,14 @@ class ClubRepositoryTest {
         assertThat(result.size()).isEqualTo(1);
     }
 
+    @Test
+    @DisplayName("v3에서 루프로 +N번 쿼리가 발생하는 것을 in절로 해결")
+    void v4() {
+        final List<ClubQueryResponse> result = clubQueryRepository.findDtoOptimization();
+
+        assertThat(result.size()).isEqualTo(1);
+    }
+
 
     @Getter
     static class ClubResponse {
