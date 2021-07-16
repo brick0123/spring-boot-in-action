@@ -20,10 +20,13 @@ import org.springframework.transaction.annotation.Transactional;
 @Slf4j
 @Transactional
 @SpringBootTest
-class ClubQueryRepositoryTest {
+class ClubRepositoryTest {
 
     @Autowired
     EntityManager em;
+
+    @Autowired
+    ClubRepository clubRepository;
 
     @Autowired
     ClubQueryRepository clubQueryRepository;
@@ -52,20 +55,29 @@ class ClubQueryRepositoryTest {
     @Test
     @DisplayName("distinct 애플리케이션에서 collection fetch join 중복을 제거.")
     void v1() {
-        final List<Club> result = clubQueryRepository.fetchV1();
+        final List<Club> result = clubRepository.fetchV1();
 
         assertThat(result.size()).isEqualTo(1);
     }
 
     @Test
-    @DisplayName("batch size로 N + 1, 페이징 해")
+    @DisplayName("batch size로 N + 1, 페이징 해결")
     void v2() {
-        final List<Club> result = clubQueryRepository.fetchV2();
+        final List<Club> result = clubRepository.fetchV2();
 
         final List<ClubResponse> dtos = result.stream()
             .map(ClubResponse::new)
             .collect(Collectors.toList());
     }
+
+    @Test
+    @DisplayName("toMany 관계를 별도로 조회해서 처리한다.")
+    void v3() {
+        final List<ClubQueryResponse> result = clubQueryRepository.findClubQueryResponse();
+
+        assertThat(result.size()).isEqualTo(1);
+    }
+
 
     @Getter
     static class ClubResponse {
