@@ -63,3 +63,7 @@ project('spring-jpa-in-action') {
 project('spring-core-in-action') {
 
 }
+
+project('spring-converter-in-action') {
+
+}
