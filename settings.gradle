@@ -3,4 +3,5 @@ include 'spring-filter-in-action'
 include 'spring-jpa-in-action'
 include 'spring-core-in-action'
 include 'spring-converter-in-action'
+include 'spring-batch-in-action'
 

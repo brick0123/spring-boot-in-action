@@ -67,3 +67,7 @@ project('spring-core-in-action') {
 project('spring-converter-in-action') {
 
 }
+
+project('spring-batch-in-action') {
+    
+}
