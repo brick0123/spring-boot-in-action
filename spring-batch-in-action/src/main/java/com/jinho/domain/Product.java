@@ -10,7 +10,7 @@ import lombok.Getter;
 @Entity
 public class Product {
 
-    protected Product() {
+    public Product() {
     }
 
     @Id
@@ -19,8 +19,15 @@ public class Product {
 
     private Long amount;
 
+    private String name;
+
     public Product(final Long amount) {
         this.amount = amount;
+    }
+
+    public Product(final Long amount, final String name) {
+        this.amount = amount;
+        this.name = name;
     }
 
     public void increaseAmount() {

@@ -1,7 +1,5 @@
 package com.jinho.job;
 
-import static org.junit.jupiter.api.Assertions.*;
-
 import com.jinho.TestBatchConfig;
 import com.jinho.domain.Order;
 import com.jinho.domain.OrderRepository;

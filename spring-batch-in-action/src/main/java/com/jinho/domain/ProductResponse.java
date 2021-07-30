@@ -12,11 +12,10 @@ public class ProductResponse {
     }
 
     private Long amount;
-    private LocalDate orderCreatedAt;
+    private LocalDate createdAt;
 
     public ProductResponse(final Long amount, final LocalDate createdAt) {
         this.amount = amount;
-        this.orderCreatedAt = createdAt;
+        this.createdAt = createdAt;
     }
-
 }
