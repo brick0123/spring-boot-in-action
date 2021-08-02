@@ -22,6 +22,8 @@ public class Order {
 
     private Long amount;
 
+    private String address;
+
     private LocalDate createdAt;
 
     public Order(final Long amount) {
@@ -30,5 +32,10 @@ public class Order {
 
     public Order(final LocalDate createdAt) {
         this.createdAt = createdAt;
+    }
+
+    public Order(final Long amount, final String address) {
+        this.amount = amount;
+        this.address = address;
     }
 }
