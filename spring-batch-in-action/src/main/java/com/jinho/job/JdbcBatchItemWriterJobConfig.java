@@ -57,7 +57,7 @@ public class JdbcBatchItemWriterJobConfig {
             .fetchSize(chunkSize)
             .dataSource(dataSource)
             .rowMapper(new BeanPropertyRowMapper<>(Product.class))
-            .sql("select id, amount, name from product")
+            .sql("select product_id, amount, name from product")
             .name(BEAN_PREFIX + "reader")
             .build();
     }

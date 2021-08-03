@@ -1,5 +1,7 @@
 package com.jinho.domain;
 
+import java.time.LocalDate;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -16,12 +18,15 @@ public class Product {
     }
 
     @Id
+    @Column(name = "product_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     private Long amount;
 
     private String name;
+
+    private LocalDate createdAt;
 
     public Product(final Long amount) {
         this.amount = amount;
@@ -32,7 +37,13 @@ public class Product {
         this.name = name;
     }
 
-    public void increaseAmount() {
+    public Product(final Long amount, final LocalDate createdAt) {
+        this.amount = amount;
+        this.createdAt = createdAt;
+    }
+
+    public Product increaseAmount() {
         amount += 1000;
+        return this;
     }
 }

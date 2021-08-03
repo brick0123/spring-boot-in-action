@@ -56,7 +56,7 @@ public class JdbcCursorWithArgumentsJobConfig {
         @Value("#{jobParameters[amount]}") Integer amount
     ) {
         log.info(">>> name = {}, amount = {}", name, amount);
-        String sql = "select p.id, p.amount, p.name from Product p where p.name = ? and p.amount = ?";
+        String sql = "select p.product_id, p.amount, p.name from Product p where p.name = ? and p.amount = ?";
 
 //        final Map<String, Object> parameters = new HashMap<>();
 //        parameters.put("1", name);
