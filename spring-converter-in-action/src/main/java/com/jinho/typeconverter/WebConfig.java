@@ -4,7 +4,6 @@ import com.jinho.typeconverter.converter.IntegerToStringConverter;
 import com.jinho.typeconverter.converter.IpPortToStringConverter;
 import com.jinho.typeconverter.converter.StringToIntegerConverter;
 import com.jinho.typeconverter.converter.StringToIpPortConverter;
-import com.jinho.typeconverter.formatter.StringToLocalDateConverter;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.convert.support.DefaultConversionService;
 import org.springframework.format.FormatterRegistry;
@@ -21,6 +20,5 @@ public class WebConfig implements WebMvcConfigurer {
         conversionService.addConverter(new IntegerToStringConverter());
         conversionService.addConverter(new IpPortToStringConverter());
         conversionService.addConverter(new StringToIpPortConverter());
-        conversionService.addConverter(new StringToLocalDateConverter());
     }
 }

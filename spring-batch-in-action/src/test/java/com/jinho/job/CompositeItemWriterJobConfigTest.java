@@ -6,7 +6,6 @@ import com.jinho.TestBatchConfig;
 import com.jinho.domain.Order;
 import com.jinho.domain.OrderRepository;
 import com.jinho.domain.Product;
-import com.jinho.domain.ProductInfoRepository;
 import com.jinho.domain.ProductRepository;
 import java.time.LocalDate;
 import java.util.List;
@@ -26,9 +25,6 @@ class CompositeItemWriterJobConfigTest {
 
     @Autowired
     ProductRepository productRepository;
-
-    @Autowired
-    ProductInfoRepository productInfoRepository;
 
     @Autowired
     OrderRepository orderRepository;
