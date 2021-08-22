@@ -10,16 +10,22 @@ import java.util.stream.Collectors;
 import javax.persistence.EntityManager;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
+import org.testcontainers.containers.JdbcDatabaseContainer;
+import org.testcontainers.containers.MySQLContainerProvider;
+import org.testcontainers.junit.jupiter.Testcontainers;
 
 @Slf4j
 @Transactional
 @SpringBootTest
+@Testcontainers
 class ClubRepositoryTest {
 
     @Autowired
@@ -30,6 +36,20 @@ class ClubRepositoryTest {
 
     @Autowired
     ClubQueryRepository clubQueryRepository;
+
+    static JdbcDatabaseContainer<?> mySQLContainer = new MySQLContainerProvider()
+        .newInstance()
+        .withDatabaseName("test-container");
+
+    @BeforeAll
+    static void beforeAll() {
+        mySQLContainer.start();
+    }
+
+    @AfterAll
+    static void afterAll() {
+        mySQLContainer.stop();
+    }
 
     @BeforeEach
     void setup() {
