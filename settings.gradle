@@ -5,4 +5,5 @@ include 'spring-core-in-action'
 include 'spring-converter-in-action'
 include 'spring-batch-in-action'
 include 'spring-redis-in-action'
+include 'spring-logging-in-action'
 
