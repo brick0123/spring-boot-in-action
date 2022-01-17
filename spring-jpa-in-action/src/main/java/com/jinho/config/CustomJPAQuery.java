@@ -94,18 +94,27 @@ public class CustomJPAQuery<T> extends AbstractJPAQuery<T, CustomJPAQuery<T>> {
     public Slice<T> toSlice() {
         try {
             final var origin = getMetadata().getModifiers();
+            // 요청 데이터 개수보다 + 1개를 더 가져온다.
             final var queryModifiers = new QueryModifiers(origin.getLimit() + 1, origin.getOffset());
 
             final var query = createQuery(queryModifiers, false);
 
             final var result = (List<T>) getResultList(query);
 
-            boolean hasNext = result.size() > queryModifiers.getLimit();
+            boolean hasNext = result.size() > origin.getLimit();
 
-            return new SliceImpl<>(hasNext ? result.subList(0, origin.getLimitAsInteger()) : result, PageRequest.of(origin.getLimitAsInteger(), origin.getLimitAsInteger()), hasNext);
+            // 결과 데이터가 요청 데이터 개수보다 + 1개가 더 많으면 마지막 데이터를 제외하고 리턴
+            return new SliceImpl<>(
+                hasNext ? subListLastContent(origin, result) : result,
+                PageRequest.of(origin.getLimitAsInteger(), origin.getLimitAsInteger()),
+                hasNext);
         } finally {
             reset();
         }
+    }
+
+    private List<T> subListLastContent(QueryModifiers origin, List<T> result) {
+        return result.subList(0, origin.getLimitAsInteger());
     }
 
     private List<?> getResultList(Query query) {
