@@ -17,7 +17,6 @@ import lombok.ToString;
 @Entity
 @Setter
 @Table(name = "orders")
-@ToString
 public class Order {
 
     protected Order() {
