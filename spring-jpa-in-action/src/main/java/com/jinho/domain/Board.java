@@ -3,8 +3,6 @@ package com.jinho.domain;
 import java.time.LocalDateTime;
 import javax.persistence.Entity;
 import javax.persistence.EntityListeners;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -25,8 +23,6 @@ public class Board {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Enumerated(value = EnumType.STRING)
-    private Category category;
 
     private String title;
 
@@ -38,8 +34,7 @@ public class Board {
     @LastModifiedDate
     private LocalDateTime updatedAt;
 
-    public Board(Category category, String title, String content) {
-        this.category = category;
+    public Board(String title, String content) {
         this.title = title;
         this.content = content;
     }
