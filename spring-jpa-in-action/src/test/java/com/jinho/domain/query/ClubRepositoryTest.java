@@ -5,6 +5,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 import com.jinho.domain.Club;
 import com.jinho.domain.Quest;
 import com.jinho.domain.User;
+import com.jinho.infrastructure.ClubQueryRepository;
+import com.jinho.infrastructure.ClubRepository;
 import java.util.List;
 import java.util.stream.Collectors;
 import javax.persistence.EntityManager;

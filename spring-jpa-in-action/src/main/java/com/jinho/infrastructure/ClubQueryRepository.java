@@ -1,9 +1,11 @@
-package com.jinho.domain.query;
+package com.jinho.infrastructure;
 
 import static com.jinho.domain.QClub.club;
 import static com.jinho.domain.QQuest.quest;
 import static com.jinho.domain.QUser.user;
 
+import com.jinho.domain.query.ClubQueryResponse;
+import com.jinho.domain.query.UserQueryResponse;
 import com.querydsl.core.types.Projections;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import java.util.List;

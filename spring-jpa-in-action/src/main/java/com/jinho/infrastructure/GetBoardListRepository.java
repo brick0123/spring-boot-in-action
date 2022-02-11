@@ -1,7 +1,8 @@
-package com.jinho.domain;
+package com.jinho.infrastructure;
 
 import static com.jinho.domain.QBoard.board;
 
+import com.jinho.domain.BoardResponse;
 import com.querydsl.core.types.Projections;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import java.util.List;

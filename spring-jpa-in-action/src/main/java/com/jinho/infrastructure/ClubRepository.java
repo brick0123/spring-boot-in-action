@@ -1,4 +1,4 @@
-package com.jinho.domain.query;
+package com.jinho.infrastructure;
 
 import static com.jinho.domain.QClub.club;
 import static com.jinho.domain.QUser.user;

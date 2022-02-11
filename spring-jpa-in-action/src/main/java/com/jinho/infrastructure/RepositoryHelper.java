@@ -1,4 +1,4 @@
-package com.jinho.domain;
+package com.jinho.infrastructure;
 
 import java.util.List;
 import lombok.extern.slf4j.Slf4j;

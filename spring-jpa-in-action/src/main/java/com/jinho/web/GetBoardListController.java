@@ -2,7 +2,7 @@ package com.jinho.web;
 
 import com.jinho.domain.BoardRepository;
 import com.jinho.domain.BoardResponse;
-import com.jinho.domain.GetBoardListRepository;
+import com.jinho.infrastructure.GetBoardListRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
