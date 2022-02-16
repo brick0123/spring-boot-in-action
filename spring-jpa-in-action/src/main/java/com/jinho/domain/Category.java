@@ -10,12 +10,17 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import lombok.Getter;
 import lombok.ToString;
-import lombok.ToString.Exclude;
 
 @Entity
+@Getter
 @ToString
 public class Category {
+
+    protected Category() {
+
+    }
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -23,11 +28,18 @@ public class Category {
 
     private Long categoryCode;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "parent_cateogry_id")
     private Category parentCategory;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "parentCategory")
-    @Exclude
+    @OneToMany(mappedBy = "parentCategory")
     private List<Category> childCategories = new ArrayList<>();
+
+    public Category(Long categoryCode) {
+        this.categoryCode = categoryCode;
+    }
+
+    public void setParentCategory(Category parentCategory) {
+        this.parentCategory = parentCategory;
+    }
 }
