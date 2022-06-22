@@ -1,6 +1,6 @@
 buildscript {
     ext {
-        springBootVersion = '2.5.2'
+        springBootVersion = '2.7.0'
     }
 
     repositories {
@@ -21,8 +21,6 @@ subprojects {
     apply plugin: 'org.springframework.boot'
     apply plugin: 'io.spring.dependency-management'
 
-    sourceCompatibility = 11
-
     repositories {
         mavenCentral()
     }
@@ -31,43 +29,9 @@ subprojects {
         enabled = false
     }
 
-    task initSourceFolders {
-        sourceSets*.java.srcDirs*.each {
-            if (!it.exists()) {
-                it.mkdirs()
-            }
-        }
-
-        sourceSets*.resources.srcDirs*.each {
-            if (!it.exists()) {
-                it.mkdirs()
-            }
-        }
-    }
-
     dependencies {
         compileOnly 'org.projectlombok:lombok'
         annotationProcessor 'org.projectlombok:lombok'
-        testImplementation('org.springframework.boot:spring-boot-starter-test')
+        testImplementation 'org.springframework.boot:spring-boot-starter-test'
     }
-}
-
-project('spring-filter-in-action') {
-
-}
-
-project('spring-jpa-in-action') {
-
-}
-
-project('spring-core-in-action') {
-
-}
-
-project('spring-converter-in-action') {
-
-}
-
-project('spring-batch-in-action') {
-    
 }
