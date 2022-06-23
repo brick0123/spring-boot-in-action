@@ -1,6 +1,6 @@
 package com.jinho.job;
 
-import com.jinho.job.parameter.RequestDateParam;
+import com.jinho.job.parameter.RequestDateJobParameter;
 import java.time.LocalDate;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
@@ -8,12 +8,11 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.batch.core.Job;
 import org.springframework.batch.core.Step;
 import org.springframework.batch.core.configuration.annotation.JobBuilderFactory;
-import org.springframework.batch.core.configuration.annotation.JobScope;
 import org.springframework.batch.core.configuration.annotation.StepBuilderFactory;
 import org.springframework.batch.core.configuration.annotation.StepScope;
 import org.springframework.batch.core.launch.support.RunIdIncrementer;
+import org.springframework.batch.item.ItemReader;
 import org.springframework.batch.item.support.ListItemReader;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -28,15 +27,7 @@ public class SimpleChunk {
     private final JobBuilderFactory jobBuilderFactory;
     private final StepBuilderFactory stepBuilderFactory;
 
-    @Qualifier(BEAN_PREFIX + "jobParameter")
-    private final RequestDateParam requestDateParam;
-
-
-    @Bean(BEAN_PREFIX + "jobParameter")
-    @JobScope
-    public RequestDateParam jobParameter() {
-        return new RequestDateParam();
-    }
+    private final RequestDateJobParameter requestDateJobParameter;
 
     @Bean(JOB_NAME)
     public Job job() {
@@ -49,10 +40,10 @@ public class SimpleChunk {
     @Bean(BEAN_PREFIX + "step")
     public Step step() {
         return stepBuilderFactory.get(BEAN_PREFIX + "step")
-            .<String, String>chunk(10)
+            .<Long, Long>chunk(10)
             .reader(getReader())
             .writer(items -> {
-                for (final String item : items) {
+                for (final Long item : items) {
                     log.info(">>> item = {}", item);
                 }
             })
@@ -61,10 +52,9 @@ public class SimpleChunk {
 
     @Bean(BEAN_PREFIX + "reader")
     @StepScope
-    public ListItemReader<String> getReader() {
-        final LocalDate requestDate = requestDateParam.getRequestDate();
-        log.info(">>> date = {}", requestDate);
-        return new ListItemReader<>(List.of("1", "2", "3"));
+    public ItemReader<Long> getReader() {
+        final LocalDate requestDate = requestDateJobParameter.getRequestDate();
+        log.info(">>> requestDate = {}", requestDate);
+        return new ListItemReader<>(List.of(1L, 2L, 3L));
     }
-
 }

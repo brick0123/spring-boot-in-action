@@ -2,7 +2,8 @@ package com.jinho.job;
 
 import com.jinho.domain.Order;
 import com.jinho.domain.Product;
-import com.jinho.job.parameter.RequestDateParam;
+import com.jinho.job.parameter.RequestDateJobParameter;
+import java.time.LocalDate;
 import java.util.concurrent.TimeUnit;
 import javax.persistence.EntityManagerFactory;
 import lombok.RequiredArgsConstructor;
@@ -10,7 +11,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.batch.core.Job;
 import org.springframework.batch.core.Step;
 import org.springframework.batch.core.configuration.annotation.JobBuilderFactory;
-import org.springframework.batch.core.configuration.annotation.JobScope;
 import org.springframework.batch.core.configuration.annotation.StepBuilderFactory;
 import org.springframework.batch.core.configuration.annotation.StepScope;
 import org.springframework.batch.core.launch.support.RunIdIncrementer;
@@ -19,7 +19,6 @@ import org.springframework.batch.item.database.JpaItemWriter;
 import org.springframework.batch.item.database.JpaPagingItemReader;
 import org.springframework.batch.item.database.builder.JpaItemWriterBuilder;
 import org.springframework.batch.item.database.builder.JpaPagingItemReaderBuilder;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -34,12 +33,11 @@ public class MultiThreadJobConfig {
     public static final String JOB_NAME = "multiThreadJob";
     public static final String BEAN_PREFIX = JOB_NAME + "_";
 
-    @Qualifier(BEAN_PREFIX + "parameter")
-    private final RequestDateParam requestDateParam;
-
     private final JobBuilderFactory jobBuilderFactory;
     private final StepBuilderFactory stepBuilderFactory;
     private final EntityManagerFactory entityManagerFactory;
+
+    private final RequestDateJobParameter requestDateJobParameter;
 
     private int chunkSize;
 
@@ -55,11 +53,6 @@ public class MultiThreadJobConfig {
         this.poolSize = poolSize;
     }
 
-    @Bean(BEAN_PREFIX + "parameter")
-    @JobScope
-    public RequestDateParam requestDateParam() {
-        return new RequestDateParam();
-    }
 
     @Bean(JOB_NAME)
     public Job job() {
@@ -84,7 +77,10 @@ public class MultiThreadJobConfig {
 
 
     @Bean(BEAN_PREFIX + "reader")
+    @StepScope
     public JpaPagingItemReader<Product> reader() {
+        final LocalDate requestDate = requestDateJobParameter.getRequestDate();
+        log.info(">>> requestDate = {}", requestDate);
         return new JpaPagingItemReaderBuilder<Product>()
             .name(BEAN_PREFIX + "reader")
             .entityManagerFactory(entityManagerFactory)
@@ -100,7 +96,7 @@ public class MultiThreadJobConfig {
         return p -> {
             TimeUnit.MILLISECONDS.sleep(500L);
             log.info(">>> process");
-            return new Order(requestDateParam.getRequestDate());
+            return new Order(requestDateJobParameter.getRequestDate());
         };
     }
 
