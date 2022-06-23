@@ -10,6 +10,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.batch.core.Job;
 import org.springframework.batch.core.Step;
 import org.springframework.batch.core.configuration.annotation.JobBuilderFactory;
+import org.springframework.batch.core.configuration.annotation.JobScope;
 import org.springframework.batch.core.configuration.annotation.StepBuilderFactory;
 import org.springframework.batch.core.configuration.annotation.StepScope;
 import org.springframework.batch.core.launch.support.RunIdIncrementer;
@@ -18,6 +19,7 @@ import org.springframework.batch.item.database.JpaItemWriter;
 import org.springframework.batch.item.database.JpaPagingItemReader;
 import org.springframework.batch.item.database.builder.JpaItemWriterBuilder;
 import org.springframework.batch.item.database.builder.JpaPagingItemReaderBuilder;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -32,6 +34,7 @@ public class MultiThreadJobConfig {
     public static final String JOB_NAME = "multiThreadJob";
     public static final String BEAN_PREFIX = JOB_NAME + "_";
 
+    @Qualifier(BEAN_PREFIX + "parameter")
     private final RequestDateParam requestDateParam;
 
     private final JobBuilderFactory jobBuilderFactory;
@@ -53,7 +56,7 @@ public class MultiThreadJobConfig {
     }
 
     @Bean(BEAN_PREFIX + "parameter")
-    @StepScope
+    @JobScope
     public RequestDateParam requestDateParam() {
         return new RequestDateParam();
     }
