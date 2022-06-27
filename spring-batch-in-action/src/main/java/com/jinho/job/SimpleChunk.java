@@ -40,10 +40,13 @@ public class SimpleChunk {
     @Bean(BEAN_PREFIX + "step")
     public Step step() {
         return stepBuilderFactory.get(BEAN_PREFIX + "step")
-            .<Long, Long>chunk(10)
+            .<Long, Long>chunk(1)
             .reader(getReader())
             .writer(items -> {
                 for (final Long item : items) {
+                    if (item == 2L) {
+                        throw new IllegalArgumentException();
+                    }
                     log.info(">>> item = {}", item);
                 }
             })

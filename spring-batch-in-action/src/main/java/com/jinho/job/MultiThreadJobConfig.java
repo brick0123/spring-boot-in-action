@@ -95,8 +95,8 @@ public class MultiThreadJobConfig {
     public ItemProcessor<Product, Order> processor() {
         return p -> {
             TimeUnit.MILLISECONDS.sleep(500L);
-            log.info(">>> process");
-            return new Order(requestDateJobParameter.getRequestDate());
+            log.info(">>> process requestDate = {}", requestDateJobParameter.getRequestDate());
+            return new Order(LocalDate.now());
         };
     }
 
@@ -107,7 +107,6 @@ public class MultiThreadJobConfig {
             .build();
     }
 
-    @Bean
     public TaskExecutor taskExecutor() {
         final ThreadPoolTaskExecutor executor = new ThreadPoolTaskExecutor();
         executor.setCorePoolSize(poolSize);

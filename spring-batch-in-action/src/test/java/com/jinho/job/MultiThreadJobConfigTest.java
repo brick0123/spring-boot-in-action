@@ -6,6 +6,7 @@ import com.jinho.TestBatchConfig;
 import com.jinho.domain.OrderRepository;
 import com.jinho.domain.Product;
 import com.jinho.domain.ProductRepository;
+import com.jinho.job.parameter.JobParameterConfig;
 import java.time.LocalDate;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -21,8 +22,8 @@ import org.springframework.test.context.TestPropertySource;
 import org.springframework.util.StopWatch;
 
 @SpringBatchTest
-@SpringBootTest(classes = {MultiThreadJobConfig.class, TestBatchConfig.class})
-@TestPropertySource(properties = {"chunkSize=1", "poolSize=5"})
+@SpringBootTest(classes = {MultiThreadJobConfig.class, TestBatchConfig.class, JobParameterConfig.class})
+@TestPropertySource(properties = {"chunkSize=5", "poolSize=5"})
 class MultiThreadJobConfigTest {
 
     @Autowired
