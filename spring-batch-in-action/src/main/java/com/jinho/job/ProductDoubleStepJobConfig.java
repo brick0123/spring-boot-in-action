@@ -10,7 +10,7 @@ import org.springframework.context.annotation.Configuration;
 @RequiredArgsConstructor
 public class ProductDoubleStepJobConfig {
 
-    private static final String JOB_NAME = "productIntegrationJob";
+    public static final String JOB_NAME = "productIntegrationJob";
 
     private final JobBuilderFactory jobBuilderFactory;
     private final UpdateProductAmountStep updateProductAmountStep;

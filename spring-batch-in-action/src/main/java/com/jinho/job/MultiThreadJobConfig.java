@@ -95,7 +95,6 @@ public class MultiThreadJobConfig {
     public ItemProcessor<Product, Order> processor() {
         return p -> {
             TimeUnit.MILLISECONDS.sleep(500L);
-            log.info(">>> process requestDate = {}", requestDateJobParameter.getRequestDate());
             return new Order(LocalDate.now());
         };
     }

@@ -11,7 +11,6 @@ import org.springframework.batch.core.configuration.annotation.JobBuilderFactory
 import org.springframework.batch.core.configuration.annotation.StepBuilderFactory;
 import org.springframework.batch.core.configuration.annotation.StepScope;
 import org.springframework.batch.core.launch.support.RunIdIncrementer;
-import org.springframework.batch.item.ItemReader;
 import org.springframework.batch.item.support.ListItemReader;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -42,20 +41,13 @@ public class SimpleChunk {
         return stepBuilderFactory.get(BEAN_PREFIX + "step")
             .<Long, Long>chunk(1)
             .reader(getReader())
-            .writer(items -> {
-                for (final Long item : items) {
-                    if (item == 2L) {
-                        throw new IllegalArgumentException();
-                    }
-                    log.info(">>> item = {}", item);
-                }
-            })
+            .writer(items -> log.info(">>> item = {}", items))
             .build();
     }
 
     @Bean(BEAN_PREFIX + "reader")
     @StepScope
-    public ItemReader<Long> getReader() {
+    public ListItemReader<Long> getReader() {
         final LocalDate requestDate = requestDateJobParameter.getRequestDate();
         log.info(">>> requestDate = {}", requestDate);
         return new ListItemReader<>(List.of(1L, 2L, 3L));

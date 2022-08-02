@@ -2,23 +2,17 @@ package com.jinho.job;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import com.jinho.TestBatchConfig;
+import com.jinho.AbstractBatchIntegrationTest;
 import com.jinho.domain.Order;
 import com.jinho.domain.OrderRepository;
 import com.jinho.domain.Product;
 import com.jinho.domain.ProductRepository;
 import java.util.List;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.springframework.batch.core.BatchStatus;
-import org.springframework.batch.core.JobExecution;
-import org.springframework.batch.test.JobLauncherTestUtils;
-import org.springframework.batch.test.context.SpringBatchTest;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
 
-@SpringBatchTest
-@SpringBootTest(classes = {JdbcBatchItemWriterJobConfig.class, TestBatchConfig.class})
-class JdbcBatchItemWriterJobConfigTest {
+class JdbcBatchItemWriterJobConfigTest extends AbstractBatchIntegrationTest {
 
     @Autowired
     ProductRepository productRepository;
@@ -26,17 +20,15 @@ class JdbcBatchItemWriterJobConfigTest {
     @Autowired
     OrderRepository orderRepository;
 
-    @Autowired
-    JobLauncherTestUtils jobLauncherTestUtils;
-
     @Test
-    void name() throws Exception {
+    @DisplayName("상품 기반으로 주문을 생성하고 저장한다.")
+    void 상품_기반_주문_생성() {
         for (int i = 0; i < 10; i++) {
             productRepository.save(new Product(10_000L, "kubernetes"));
         }
 
-        final JobExecution jobExecution = jobLauncherTestUtils.launchJob();
-        assertThat(jobExecution.getStatus()).isEqualTo(BatchStatus.COMPLETED);
+        launchJob(JdbcBatchItemWriterJobConfig.JOB_NAME);
+        checkSuccessJob();
 
         final List<Order> orders = orderRepository.findAll();
         assertThat(orders.size()).isEqualTo(10);

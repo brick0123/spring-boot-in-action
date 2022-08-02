@@ -23,7 +23,7 @@ import org.springframework.jdbc.core.BeanPropertyRowMapper;
 @RequiredArgsConstructor
 public class JdbcBatchItemWriterJobConfig {
 
-    private static final String JOB_NAME = "jdbcBatchWrite";
+    public static final String JOB_NAME = "jdbcBatchWriteJob";
     private static final String BEAN_PREFIX = JOB_NAME + "_";
 
     private final JobBuilderFactory jobBuilderFactory;
@@ -33,9 +33,9 @@ public class JdbcBatchItemWriterJobConfig {
 
     public static final int chunkSize = 10;
 
-    @Bean
+    @Bean(JOB_NAME)
     public Job jdbcBatchItemWriterJob() {
-        return jobBuilderFactory.get("jdbcBatchWrite")
+        return jobBuilderFactory.get(JOB_NAME)
             .start(jdbcBatchItemWriterStep())
             .build();
     }
@@ -52,7 +52,7 @@ public class JdbcBatchItemWriterJobConfig {
     }
 
     @Bean
-    public JdbcCursorItemReader<? extends Product> jdbcBatchItemWriterReader() {
+    public JdbcCursorItemReader<Product> jdbcBatchItemWriterReader() {
         return new JdbcCursorItemReaderBuilder<Product>()
             .fetchSize(chunkSize)
             .dataSource(dataSource)
@@ -62,7 +62,7 @@ public class JdbcBatchItemWriterJobConfig {
             .build();
     }
 
-    private ItemProcessor<? super Product, ? extends Order> process() {
+    private ItemProcessor<Product, Order> process() {
         return p -> new Order(p.getAmount(), p.getName());
     }
 

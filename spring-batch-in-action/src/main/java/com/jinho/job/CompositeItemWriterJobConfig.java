@@ -26,7 +26,7 @@ import org.springframework.context.annotation.Configuration;
 @RequiredArgsConstructor
 public class CompositeItemWriterJobConfig {
 
-    private static final String BEAN_NAME = "compositeItemWriter";
+    public static final String BEAN_NAME = "compositeItemWriter";
 
     private final JobBuilderFactory jobBuilderFactory;
     private final StepBuilderFactory stepBuilderFactory;

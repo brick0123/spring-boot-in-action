@@ -16,9 +16,11 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 @Slf4j
-@RequiredArgsConstructor
 @Configuration
+@RequiredArgsConstructor
 public class JpaCursorItemReaderJobConfig {
+
+    public static final String JOB_NAME = "jpaCursorItemReaderJob";
 
     private final JobBuilderFactory jobBuilderFactory;
     private final StepBuilderFactory stepBuilderFactory;
@@ -27,9 +29,9 @@ public class JpaCursorItemReaderJobConfig {
     @Value("${chunkSize:1000}")
     private int chunkSize;
 
-    @Bean
+    @Bean(JOB_NAME)
     public Job jpaCursorItemReaderJob() {
-        return jobBuilderFactory.get("jpaCursorItemReaderJob")
+        return jobBuilderFactory.get(JOB_NAME)
             .start(jpaCursorItemReaderStep())
             .build();
     }

@@ -2,38 +2,27 @@ package com.jinho.job;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import com.jinho.TestBatchConfig;
+import com.jinho.AbstractBatchIntegrationTest;
 import com.jinho.domain.OrderRepository;
 import com.jinho.domain.Product;
 import com.jinho.domain.ProductRepository;
-import com.jinho.job.parameter.JobParameterConfig;
 import java.time.LocalDate;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.springframework.batch.core.BatchStatus;
-import org.springframework.batch.core.JobExecution;
 import org.springframework.batch.core.JobParameters;
 import org.springframework.batch.core.JobParametersBuilder;
-import org.springframework.batch.test.JobLauncherTestUtils;
-import org.springframework.batch.test.context.SpringBatchTest;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.util.StopWatch;
 
-@SpringBatchTest
-@SpringBootTest(classes = {MultiThreadJobConfig.class, TestBatchConfig.class, JobParameterConfig.class})
 @TestPropertySource(properties = {"chunkSize=5", "poolSize=5"})
-class MultiThreadJobConfigTest {
+class MultiThreadJobConfigTest extends AbstractBatchIntegrationTest {
 
     @Autowired
     ProductRepository productRepository;
 
     @Autowired
     OrderRepository orderRepository;
-
-    @Autowired
-    JobLauncherTestUtils jobLauncherTestUtils;
 
     @BeforeEach
     void setUp() {
@@ -43,7 +32,7 @@ class MultiThreadJobConfigTest {
     }
 
     @Test
-    void task() throws Exception {
+    void task() {
         final StopWatch stopWatch = new StopWatch();
         stopWatch.start();
 
@@ -51,12 +40,12 @@ class MultiThreadJobConfigTest {
             .addString("requestDate", LocalDate.now().toString())
             .toJobParameters();
 
-        final JobExecution jobExecution = jobLauncherTestUtils.launchJob(parameters);
+        launchJob(MultiThreadJobConfig.JOB_NAME, parameters);
         stopWatch.stop();
 
         System.out.println(">>> total task time = " + stopWatch.getTotalTimeMillis() + "ms");
 
-        assertThat(jobExecution.getStatus()).isEqualTo(BatchStatus.COMPLETED);
+        checkSuccessJob();
         assertThat(orderRepository.count()).isEqualTo(10L);
     }
 }

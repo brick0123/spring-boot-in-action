@@ -21,6 +21,8 @@ import org.springframework.jdbc.core.BeanPropertyRowMapper;
 @RequiredArgsConstructor
 public class GetProductDtoJobConfig {
 
+    public static final String JOB_NAME = "getProductDtoJob";
+
     private final JobBuilderFactory jobBuilderFactory;
     private final StepBuilderFactory stepBuilderFactory;
     private final DataSource dataSource;
@@ -28,9 +30,9 @@ public class GetProductDtoJobConfig {
     @Value("${chunkSize:1000}")
     private int chunkSize;
 
-    @Bean
+    @Bean(JOB_NAME)
     public Job getProductDtoJob() {
-        return jobBuilderFactory.get("getProductDtoJob")
+        return jobBuilderFactory.get(JOB_NAME)
             .start(getProductDto())
             .build();
     }
@@ -50,7 +52,7 @@ public class GetProductDtoJobConfig {
             .name("getProductDtoReader")
             .dataSource(dataSource)
             .rowMapper(new BeanPropertyRowMapper<>(ProductResponse.class))
-            .sql("select p.amount, o.created_at from Product p inner join Orders o on(p.id = o.id)")
+            .sql("select p.amount, o.created_at from Product p inner join Orders o on(p.product_id = o.id)")
             .build();
     }
 
